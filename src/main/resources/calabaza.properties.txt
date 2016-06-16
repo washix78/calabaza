@@ -1,0 +1,4 @@
+dataDir=./data
+serverPort=8080
+tempDir=./temp
+docDir=./webapp

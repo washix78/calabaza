@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app>
+
+  <listener>
+    <listener-class>calabaza.server.CalabazaServletContextListener</listener-class>
+  </listener>
+
+  <filter>
+    <filter-name>CalabazaFilter</filter-name>
+    <filter-class>calabaza.server.CalabazaFilter</filter-class>
+  </filter>
+  
+  <filter-mapping>
+    <filter-name>CalabazaFilter</filter-name>
+    <url-pattern>/api/*</url-pattern>
+  </filter-mapping>
+
+  <servlet>
+    <servlet-name>PageServlet</servlet-name>
+    <servlet-class>calabaza.server.PageServlet</servlet-class>
+  </servlet>
+  <servlet>
+    <servlet-name>TagServlet</servlet-name>
+    <servlet-class>calabaza.server.TagServlet</servlet-class>
+  </servlet>
+  <servlet>
+    <servlet-name>ImageServlet</servlet-name>
+    <servlet-class>calabaza.server.ImageServlet</servlet-class>
+  </servlet>
+  <servlet>
+    <servlet-name>JSServlet</servlet-name>
+    <servlet-class>calabaza.server.JSServlet</servlet-class>
+  </servlet>
+  
+  <servlet-mapping>
+    <servlet-name>PageServlet</servlet-name>
+    <url-pattern>/api/page</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>TagServlet</servlet-name>
+    <url-pattern>/api/tag</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>ImageServlet</servlet-name>
+    <url-pattern>/api/image</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>JSServlet</servlet-name>
+    <url-pattern>/js/*</url-pattern>
+  </servlet-mapping>
+
+</web-app>

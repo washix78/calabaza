@@ -1,0 +1,110 @@
+html,
+body {
+  height: 100%;
+  margin: 0;
+}
+
+a {
+  cursor: pointer;
+}
+
+ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+ul > li {}
+
+.hidden {
+  display: none !important;
+}
+
+body::after {
+  clear: both;
+  content: "";
+  display: block;
+  height: 0;
+}
+
+#left {
+  height: 100%;
+  overflow: auto;
+  width: 300px;
+}
+#left header {
+  background-color: #56c1fc;
+  font-size: 1.5em;
+  font-weight: bold;
+  padding: 5px 0;
+  text-align: center;
+}
+#left #tags {
+  margin: 20px auto 0;
+  width: 250px;
+}
+#left #tags a {
+  background-color: #40c6d5;
+  display: block;
+  font-size: 0.8em;
+  font-weight: bold;
+  margin-top: 5px;
+  padding: 5px;
+  text-align: center;
+}
+#left #tags a.selected {
+  background-color: #479bcd;
+  color: #ffffff;
+}
+#left nav:nth-of-type(2) {
+  margin-top: 20px;
+  text-align: center;
+}
+#left nav:nth-of-type(2) a {
+  background-color: silver;
+  display: inline-block;
+  font-size: 0.8em;
+  padding: 5px 10px;
+}
+
+#right {
+  overflow: auto;
+  position: fixed;
+  top: 0;
+  left: 300px;
+  right: 0;
+  bottom: 0;
+}
+#right #status {
+  margin: 100px auto 0;
+  width: 500px;
+}
+#right #status li {
+  border-radius: 5px;
+  padding: 10px 20px;
+}
+#right #status li:nth-of-type(1) {
+  background-color: lightgreen;
+}
+#right #status li:nth-of-type(2) {
+  background-color: skyblue;
+}
+#right #status li:nth-of-type(3) {
+  background-color: silver;
+}
+#right ul.display {}
+#right ul.display li {
+  display: inline-block;
+  margin: 10px;
+}
+#right div {
+  margin: 20px 0;
+  text-align: center;
+}
+#right div > a {
+  background-color: #5fa3d6;
+  border-radius: 10px;
+  display: inline-block;
+  font-size: 1.2em;
+  font-weight: bold;
+  padding: 10px 200px;
+}

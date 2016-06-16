@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE project>
+
+<project xmlns:ivy="antlib:org.apache.ivy.ant" name="calabaza" default="compile" basedir=".">
+
+  <property file="./build.properties" />
+
+  <fileset id="lib" dir="./lib">
+    <exclude name="*-sources.jar" />
+    <exclude name="*-javadoc.jar" />
+  </fileset>
+
+  <target name="resolve">
+    <ivy:retrieve />
+  </target>
+
+  <target name="develop" depends="resolve,data">
+    <copy tofile="./src/main/resources/calabaza.properties" file="./src/main/resources/calabaza.properties.txt" />
+  </target>
+
+  <target name="clear">
+    <delete dir="${dir.work}" />
+    <mkdir dir="${dir.work}" />
+  </target>
+
+  <target name="compile" depends="clear">
+    <mkdir dir="${dir.work}/classes" />
+    <javac srcdir="${dir.src}" destdir="${dir.work}/classes" encoding="UTF-8" includeantruntime="false" listfiles="true">
+      <classpath>
+        <fileset refid="lib" />
+      </classpath>
+    </javac>
+  </target>
+
+  <target name="jar" depends="compile">
+    <jar basedir="${dir.work}/classes" destfile="${dir.work}/${app.name}-${app.version}.jar" />
+  </target>
+
+  <target name="data" depends="jar">
+    <delete dir="${dir.data}" />
+    <java classname="calabaza.CalabazaBuilder">
+      <classpath>
+        <fileset refid="lib" />
+        <pathelement location="${dir.work}/${app.name}-${app.version}.jar" />
+      </classpath>
+      <!-- image directory -->
+      <arg value="${dir.image}" />
+      <!-- data directory -->
+      <arg value="${dir.data}" />
+    </java>
+  </target>
+
+  <target name="release" depends="jar,data">
+    <mkdir dir="${dir.work}/${app.name}/bin/lib" />
+
+    <!-- jar file -->
+    <move todir="${dir.work}/${app.name}/bin" file="${dir.work}/${app.name}-${app.version}.jar" />
+
+    <!-- properties file -->
+    <copy todir="${dir.work}/${app.name}/bin" file="./src/main/resources/calabaza.properties.txt" />
+    <move file="${dir.work}/${app.name}/bin/calabaza.properties.txt" tofile="${dir.work}/${app.name}/bin/calabaza.properties" />
+
+    <!-- jre -->
+    <copy todir="${dir.work}/${app.name}/bin">
+      <fileset dir="${dir.resources}" includes="${dir.jre}/**" />
+    </copy>
+
+    <!-- lib -->
+    <copy todir="${dir.work}/${app.name}/bin/lib">
+      <fileset refid="lib" />
+    </copy>
+
+    <!-- webapp directory -->
+    <copy todir="${dir.work}/${app.name}">
+      <fileset dir="." includes="webapp/**" />
+    </copy>
+
+    <!-- data (json) file -->
+    <mkdir dir="${dir.work}/${app.name}/data" />
+    <copy todir="${dir.work}/${app.name}/data">
+      <fileset dir="${dir.data}" includes="*.json" />
+    </copy>
+
+    <!-- readme file -->
+    <copy todir="${dir.work}/${app.name}" file="${dir.resources}/README.html" />
+
+    <!-- batch file -->
+    <copy todir="${dir.work}/${app.name}" file="${dir.resources}/calabaza.bat" />
+
+    <delete dir="${dir.dist}" />
+    <mkdir dir="${dir.dist}" />
+    <zip destfile="${dir.dist}/${app.name}-${app.version}.zip" basedir="${dir.work}" includes="${app.name}/**" />
+  </target>
+
+</project>
